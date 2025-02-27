@@ -1,6 +1,6 @@
 from sqlalchemy.orm import declarative_base, relationship, Session
 from sqlalchemy import *
-from datetime import datetime
+
 
 base = declarative_base()
 
