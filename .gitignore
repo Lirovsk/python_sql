@@ -1,3 +1,6 @@
 # ignore specified files
 test.py
 test2.py
+# ignore all files with .pyc and .db extension
+*.pyc
+*.db
