@@ -4,7 +4,7 @@ from models import Membro, area_hist, charge_hist
 class add_membro:
     def __init__(self, name=str, start_date=str, course=str, actual_area=str, more_than1_area=bool, actual_charge=str, more_than1_charge=bool, menager=bool):
         self.name = name
-        self.start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+        self.start_date = datetime.strptime(start_date, '%d/%m/%Y').date()
         self.course = course
         self.actual_area = actual_area
         self.more_than1_area = more_than1_area
@@ -123,7 +123,7 @@ Menager: {self.menager}"""
                 self.menager = False
     
     def create_isntance(self):
-        Membro(name=self.name,
+        return Membro(name=self.name,
                start_date=self.start_date,
                course=self.course,
                actual_area=self.actual_area,
@@ -131,10 +131,9 @@ Menager: {self.menager}"""
                actual_charge=self.actual_charge,
                more_than1_charge=self.more_than1_charge,
                menager=self.menager)
-        return Membro
     
     @classmethod
-    def creating_process(cls):
+    def adding_process(cls):
         list = cls.getting_data()
         return cls(name=list[0],
                    start_date=list[1],
@@ -144,5 +143,4 @@ Menager: {self.menager}"""
                    actual_charge=list[5],
                    more_than1_charge=list[6],
                    menager=list[7])
-
         
