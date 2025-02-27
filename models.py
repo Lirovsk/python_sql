@@ -50,11 +50,11 @@ class charge_hist(base):
 engine = create_engine('sqlite:///membros.db')
     
     #Create tables
-base.metadata.create_all(engine)
+#base.metadata.create_all(engine)
     
-inspector = inspect(engine)
+#inspector = inspect(engine)
 
-print(inspector.get_table_names())
-print(inspector.get_schema_names())
+#print(inspector.get_table_names())
+#print(inspector.get_schema_names())
 
    
