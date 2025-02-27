@@ -43,3 +43,16 @@ class charge_hist(base):
     
     def __repr__(self):
         return f'<charge_hist(charge={self.charge}, start_date={self.start_date}, end_date={self.end_date})>'
+    
+    
+    #Conections
+engine = create_engine('sqlite:///membros.db')
+    
+    #Create tables
+base.metadata.create_all(engine)
+    
+inspector = inspect(engine)
+
+print(inspector.get_table_names())
+print(inspector.get_schema_names())
+    
