@@ -57,25 +57,4 @@ inspector = inspect(engine)
 print(inspector.get_table_names())
 print(inspector.get_schema_names())
 
-with Session(engine) as session:
-    
-    start_date = datetime.strptime('2021-01-01', '%Y-%m-%d').date()
-    end_date = datetime.strptime('2021-01-02', '%Y-%m-%d').date()
-    
-    session.add(Membro(name='João', start_date=start_date, course='Engenharia', actual_area='TI', more_than1_area=False, actual_charge='Analista', more_than1_charge=False, menager=False))
-    session.commit()
-
-    session.add(area_hist(id_membro=1, area='TI', start_date=start_date, end_date=end_date))
-    session.commit()
-    
-    session.add(charge_hist(id_membro=1, charge='Analista', start_date=start_date, end_date=end_date))
-    session.commit()
-    
-    print(session.query(Membro).all())
-    print(session.query(area_hist).all())
-    print(session.query(charge_hist).all())
    
-stmt = select(Membro).where(Membro.id == 1)
-
-with Session(engine) as session:
-    print(session.execute(stmt).scalars().all())
