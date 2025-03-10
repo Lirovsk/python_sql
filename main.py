@@ -1,6 +1,6 @@
 import time 
 import os
-from services import *
+from add_membro import *
 from models import Membro, area_hist, charge_hist, base, engine
 from sqlalchemy.orm import Session
 
