@@ -56,5 +56,3 @@ engine = create_engine('sqlite:///membros.db')
 
 #print(inspector.get_table_names())
 #print(inspector.get_schema_names())
-
-   
