@@ -1,0 +1,3 @@
+Essa pasta contém um modelo de criação de banco de dados volátil para o aprendizado de novos métodos SQL. 
+Por isso existirá pouca divisão de funções e classes entre arquivos diferentes, concentrando a maior parte do código
+no arquivo models.py.
