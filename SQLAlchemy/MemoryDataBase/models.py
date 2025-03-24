@@ -3,6 +3,7 @@ from sqlalchemy import Integer
 from sqlalchemy import create_engine
 from sqlalchemy import ForeignKey
 from sqlalchemy import insert
+from sqlalchemy import select
 # In case of need:
 from sqlalchemy import text
 from sqlalchemy.orm import Mapped
@@ -12,6 +13,8 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.orm import Session
 from typing import List
 from typing import Optional
+
+from time import sleep
 
 # Definindo a engine do banco de dados / Defining the engine of the database
 engine = create_engine("sqlite:///:memory:", echo=True)
@@ -29,7 +32,7 @@ class User(Base):
     name: Mapped[str] = mapped_column(String(30))
     fullname: Mapped[Optional[str]]
     
-    address: Mapped[List["Address"]] = relationship(back_populates="User")
+    addresses: Mapped[List["Address"]] = relationship(back_populates="user")
     
     
     def __repr__(self) -> str:
@@ -50,15 +53,33 @@ class Address(Base):
 
 # Criando as tabelas / Creating the tables
 Base.metadata.create_all(engine)
-stmt = insert(User).values(name="Lira", fullname="João Vítor Lira")
-stmt2 = insert(User).values(name="Isa", fullname="Isadora")
-compiled = stmt.compile()
-compiled2 = stmt2.compile()
-compiled.params
-compiled2.params
+lira = User(name="Lira", fullname="João Vítor Lira")
+Isa = User(name="Isa", fullname="Isadora")
+Paula = User(name="Paula", fullname="Paula arantes")
+print(lira, Isa, Paula)
 input("Enter para prosseguir")
-with engine.connect() as conn:
-    conn.execute(stmt)
-    conn.execute(stmt2)
+with Session(engine) as conn:
+    conn.add(lira)
+    conn.add(Isa)
+    conn.add(Paula)
+    # The above objects are not in the database yet
+    conn.flush()
+    # The flushing process allow it to decide the bes method to commit hte changes into the database
     conn.commit()
+    print(f"The objects' id is: {lira.id}, {Isa.id}, {Paula.id}") # The objects need to be inside a session.
+    conn.close()
     
+"""input("Pressione enter para pesquisar informações no banco de dados")
+print(select(User))
+stmt = select(User).where(User.name =="Isa")
+with Session(engine) as conn:
+    result = conn.execute(stmt)"""
+with Session(engine) as conn:
+    result = conn.execute(select(User)).all()
+for row in result:
+    print(row)        
+
+with Session(engine) as conn:
+    result = conn.execute(select(User.name)).all()
+for row in result:
+    print(row)
